@@ -293,6 +293,21 @@ h3 {
   white-space: nowrap;
 }
 
+.hero-booking-shell {
+  transition:
+    opacity 180ms ease,
+    visibility 0ms linear 0ms;
+}
+
+.hero-booking-shell.is-hidden {
+  visibility: hidden;
+  opacity: 0 !important;
+  pointer-events: none;
+  transition:
+    opacity 180ms ease,
+    visibility 0ms linear 180ms;
+}
+
 .sticky-booking {
   position: fixed;
   right: 0;
