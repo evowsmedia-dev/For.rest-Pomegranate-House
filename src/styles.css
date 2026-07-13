@@ -150,8 +150,8 @@ button {
   left: 52%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.85;
-  mix-blend-mode: multiply;
+  opacity: 0.78;
+  mix-blend-mode: soft-light;
 }
 
 .cinematic-scene canvas {
@@ -789,7 +789,7 @@ select:focus-visible {
     bottom: auto;
     left: 38%;
     height: 360px;
-    opacity: 0.58;
+    opacity: 0.46;
   }
 
   .hero-image-large,

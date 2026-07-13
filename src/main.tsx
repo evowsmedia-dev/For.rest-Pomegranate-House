@@ -423,55 +423,68 @@ function CinematicScene() {
   return (
     <div className="cinematic-scene" aria-hidden="true">
       <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 7], fov: 42 }} gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }}>
-        <ambientLight intensity={0.85} />
-        <directionalLight position={[3, 4, 5]} intensity={1.55} color="#ffd0a3" />
-        <directionalLight position={[-4, -2, 4]} intensity={0.7} color="#68d7cf" />
-        <TropicalLightSculpture />
+        <ambientLight intensity={0.9} />
+        <directionalLight position={[3, 4, 5]} intensity={1.25} color="#ffd9b0" />
+        <directionalLight position={[-4, -2, 4]} intensity={0.9} color="#73d7d2" />
+        <WhaleScene />
       </Canvas>
     </div>
   );
 }
 
-function TropicalLightSculpture() {
-  const groupRef = useRef<THREE.Group>(null);
-  const poolRef = useRef<THREE.Mesh>(null);
+function WhaleScene() {
+  const whaleRef = useRef<THREE.Group>(null);
+  const waveRef = useRef<THREE.Group>(null);
 
   useFrame(({ clock, pointer }) => {
     const time = clock.getElapsedTime();
 
-    if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(time * 0.22) * 0.24 + pointer.x * 0.08;
-      groupRef.current.rotation.x = Math.cos(time * 0.18) * 0.08 - pointer.y * 0.05;
-      groupRef.current.position.y = Math.sin(time * 0.55) * 0.08;
+    if (whaleRef.current) {
+      whaleRef.current.rotation.y = -0.34 + Math.sin(time * 0.26) * 0.1 + pointer.x * 0.04;
+      whaleRef.current.rotation.z = Math.sin(time * 0.42) * 0.045;
+      whaleRef.current.position.y = Math.sin(time * 0.52) * 0.09;
+      whaleRef.current.position.x = Math.sin(time * 0.2) * 0.12;
     }
 
-    if (poolRef.current) {
-      poolRef.current.rotation.z = Math.sin(time * 0.35) * 0.08;
+    if (waveRef.current) {
+      waveRef.current.rotation.z = Math.sin(time * 0.35) * 0.035;
+      waveRef.current.position.y = -1.1 + Math.sin(time * 0.7) * 0.035;
     }
   });
 
   return (
-    <group ref={groupRef} position={[0.65, 0.15, -0.2]}>
-      <mesh position={[0, 0.38, 0]}>
-        <sphereGeometry args={[0.88, 48, 48]} />
-        <meshStandardMaterial color="#d96432" roughness={0.42} metalness={0.08} emissive="#6f1f10" emissiveIntensity={0.08} />
-      </mesh>
-      <mesh position={[0, 0.42, -0.02]} rotation={[0.9, 0.2, 0.2]}>
-        <torusGeometry args={[1.08, 0.018, 16, 96]} />
-        <meshStandardMaterial color="#f6b84c" roughness={0.22} metalness={0.4} />
-      </mesh>
-      <mesh position={[0.2, 1.18, 0]} rotation={[0.45, 0.2, -0.75]}>
-        <coneGeometry args={[0.18, 0.42, 4]} />
-        <meshStandardMaterial color="#0f6c4b" roughness={0.6} />
-      </mesh>
-      <mesh ref={poolRef} position={[-0.62, -0.82, -0.25]} rotation={[1.18, 0.25, -0.18]}>
-        <torusGeometry args={[1.48, 0.038, 18, 128]} />
-        <meshStandardMaterial color="#5ed4cc" roughness={0.16} metalness={0.25} transparent opacity={0.72} />
-      </mesh>
-      <mesh position={[-0.62, -0.82, -0.32]} rotation={[1.18, 0.25, -0.18]}>
-        <circleGeometry args={[1.45, 96]} />
-        <meshStandardMaterial color="#7ee1df" transparent opacity={0.18} side={THREE.DoubleSide} />
-      </mesh>
+    <group position={[0.15, 0.08, -0.3]}>
+      <group ref={whaleRef} rotation={[0.05, -0.34, -0.02]}>
+        <mesh scale={[1.72, 0.58, 0.58]} rotation={[0, 0, Math.PI / 2]}>
+          <capsuleGeometry args={[0.72, 1.32, 18, 36]} />
+          <meshStandardMaterial color="#315f6a" roughness={0.58} metalness={0.04} emissive="#0b2a31" emissiveIntensity={0.05} />
+        </mesh>
+        <mesh position={[1.72, 0.02, 0]} rotation={[0, 0, -Math.PI / 2]} scale={[0.82, 0.48, 0.12]}>
+          <coneGeometry args={[0.62, 0.8, 3]} />
+          <meshStandardMaterial color="#315f6a" roughness={0.58} metalness={0.04} />
+        </mesh>
+        <mesh position={[0.2, -0.5, 0.1]} rotation={[0.2, 0.05, -0.58]} scale={[0.72, 0.2, 0.04]}>
+          <circleGeometry args={[0.8, 48]} />
+          <meshStandardMaterial color="#224b55" roughness={0.5} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[-0.98, 0.28, 0.32]} rotation={[0.2, 0.42, 0.14]} scale={[0.52, 0.12, 0.04]}>
+          <circleGeometry args={[0.72, 40]} />
+          <meshStandardMaterial color="#f4ead8" roughness={0.42} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[-1.28, 0.14, 0.38]}>
+          <sphereGeometry args={[0.035, 16, 16]} />
+          <meshStandardMaterial color="#10272d" roughness={0.2} />
+        </mesh>
+      </group>
+
+      <group ref={waveRef} position={[0, -1.1, -0.35]}>
+        {[-1.15, -0.35, 0.45, 1.2].map((x, index) => (
+          <mesh key={x} position={[x, Math.sin(index) * 0.05, 0]} rotation={[1.22, 0, 0]} scale={[0.72, 0.11, 0.04]}>
+            <torusGeometry args={[0.62, 0.012, 8, 64]} />
+            <meshStandardMaterial color="#5ccbc7" roughness={0.2} metalness={0.1} transparent opacity={0.58} />
+          </mesh>
+        ))}
+      </group>
     </group>
   );
 }
