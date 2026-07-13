@@ -6,63 +6,63 @@ const bookingConfig = {
   bookingPhone: "+84 900 000 000",
   bookingZaloUrl: "https://zalo.me/840900000000",
   contactEmail: "hello@forrest.example",
-  locationLabel: "Outside Da Lat, Lam Dong, Vietnam",
+  locationLabel: "A quiet coastal village in Vietnam",
 };
 
 const heroImages = [
   {
-    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
-    alt: "Warm timber garden house surrounded by green trees",
+    src: "/house/8.jpg",
+    alt: "For.rest Pomegranate House pool courtyard with arched openings and timber balcony",
   },
   {
-    src: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=900&q=85",
-    alt: "Small cabin porch in soft morning forest light",
+    src: "/house/7.jpg",
+    alt: "Sunset over red tile roofs and the sea from the wooden balcony",
   },
 ];
 
 const galleryImages = [
   {
-    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85",
-    alt: "Sunlit living room with large glass doors facing the garden",
+    src: "/house/2.jpg",
+    alt: "Sunlit pool courtyard with cream walls, arched doors, and timber window boxes",
     label: "IDEA 01",
-    text: "A small house for slow reading, deeper sleep, and mornings that begin with the garden.",
+    text: "A private pool courtyard framed by cream walls, red tile roofs, and timber doors.",
   },
   {
-    src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=85",
-    alt: "Warm wood lounge corner with light linen textures",
+    src: "/house/5.jpg",
+    alt: "Loft interior with wooden staircase, dining table, and compact kitchen",
     label: "IDEA 02",
-    text: "Natural textures, light linen, and quiet corners designed for staying in.",
+    text: "A loft-style interior with warm wood, textured plaster, and a practical little kitchen.",
   },
   {
-    src: "https://images.unsplash.com/photo-1521783593447-5702b9bfd267?auto=format&fit=crop&w=900&q=85",
-    alt: "Breakfast table beside a window looking into green trees",
+    src: "/house/3.jpg",
+    alt: "Twin beds facing an open window with sea and red roof views",
     label: "IDEA 03",
-    text: "Simple breakfasts by the window before a short walk through the nearby hills.",
+    text: "Sea-view bedrooms where red rooftops, open windows, and white linen set the pace.",
   },
 ];
 
 const journalCards = [
   {
-    src: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=900&q=85",
-    title: "A morning with nothing scheduled",
+    src: "/house/6.jpg",
+    title: "Sunset from the balcony doors",
   },
   {
-    src: "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?auto=format&fit=crop&w=900&q=85",
-    title: "Small paths around the house",
+    src: "/house/4.jpg",
+    title: "Long lunches beside the pool",
   },
   {
-    src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=85",
-    title: "When the garden is the destination",
+    src: "/house/1.jpg",
+    title: "A beach walk before nightfall",
   },
 ];
 
 const amenities = [
-  "2 private bedrooms",
-  "Compact kitchen with essentials",
-  "Garden yard and tea porch",
+  "Sea-view bedrooms",
+  "Private pool courtyard",
+  "Loft living and dining room",
   "Wifi, air conditioning, hot water",
-  "Window-side work corner",
-  "Optional breakfast support",
+  "Compact kitchen with essentials",
+  "Shared meal and local food support",
 ];
 
 const structuredData = {
@@ -70,12 +70,10 @@ const structuredData = {
   "@type": "LodgingBusiness",
   name: "For.rest Pomegranate House",
   description:
-    "A private garden homestay outside Da Lat, Vietnam, designed for quiet weekend stays, slow mornings, small groups, and direct booking by Zalo or phone.",
+    "A private coastal pool homestay in Vietnam with sea-view rooms, warm timber interiors, shared dining, and direct booking by Zalo or phone.",
   telephone: bookingConfig.bookingPhone,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Da Lat",
-    addressRegion: "Lam Dong",
     addressCountry: "VN",
   },
   amenityFeature: amenities.map((amenity) => ({
@@ -83,7 +81,7 @@ const structuredData = {
     name: amenity,
     value: true,
   })),
-  image: heroImages.map((image) => image.src),
+  image: [...heroImages, ...galleryImages, ...journalCards].map((image) => image.src),
 };
 
 function App() {
@@ -138,11 +136,11 @@ function App() {
 
       <section className="hero page-shell" id="top">
         <div className="hero-copy">
-          <p className="meta">PRIVATE GARDEN HOMESTAY NEAR DA LAT</p>
+          <p className="meta">PRIVATE COASTAL POOL HOMESTAY</p>
           <h1>For.rest Pomegranate House</h1>
           <p>
-            A quiet garden house for travelers who want the city to fall
-            away, the morning to arrive slowly, and the booking to stay simple.
+            A coastal house with a turquoise pool courtyard, sea-view rooms,
+            warm timber details, and direct booking that stays simple.
           </p>
         </div>
 
@@ -157,12 +155,12 @@ function App() {
       <section className="page-shell intro" id="space">
         <div>
           <p className="meta">THE HOUSE</p>
-          <h2>A private garden homestay made for small groups and unhurried days.</h2>
+          <h2>A private coastal homestay made for pool days, sea views, and long meals.</h2>
         </div>
         <p>
-          Pomegranate House is shaped like a stay-in journal: warm materials,
-          wide openings, a useful little kitchen, and a garden that gives every
-          hour its own reason to slow down.
+          Pomegranate House is shaped around a bright courtyard pool, arched
+          openings, red rooflines, and rooms that look toward the sea. It feels
+          lived-in, textured, and easy for small groups to settle into.
         </p>
       </section>
 
@@ -182,7 +180,7 @@ function App() {
         <div className="page-shell feature-grid">
           <div>
             <p className="meta">STAY DETAILS</p>
-            <h2>Everything is kept useful, calm, and easy to settle into.</h2>
+            <h2>Everything is close at hand: the pool, the table, the rooms, and the sea air.</h2>
           </div>
           <ul className="amenity-list" aria-label="Homestay amenities">
             {amenities.map((item) => (
@@ -196,7 +194,7 @@ function App() {
         <div className="section-heading">
           <div>
             <p className="meta">PERSPECTIVES</p>
-            <h2>Small scenes from a For.rest weekend.</h2>
+            <h2>Small scenes from a For.rest coastal stay.</h2>
           </div>
           <a className="pill-link" href="#booking">
             Hold your dates →
@@ -246,8 +244,8 @@ function App() {
         <h2>{bookingConfig.locationLabel}</h2>
         <p>
           The exact address is shared after reservation. The area suits couples
-          and small groups looking for a quiet weekend base with light cooking,
-          garden time, and short walks nearby.
+          and small groups looking for a quiet coastal base with pool time,
+          home-style meals, sea views, and sunset walks nearby.
         </p>
       </section>
 
