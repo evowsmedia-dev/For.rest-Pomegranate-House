@@ -5,6 +5,7 @@ import "./styles.css";
 const bookingConfig = {
   bookingPhone: "+84 900 000 000",
   bookingZaloUrl: "https://zalo.me/840900000000",
+  contactEmail: "hello@forrest.example",
   locationLabel: "Outside Da Lat, Lam Dong, Vietnam",
 };
 
@@ -266,6 +267,8 @@ function App() {
       <div className={`sticky-booking ${showStickyBooking ? "is-visible" : ""}`} aria-hidden={!showStickyBooking}>
         <BookingBar variant="sticky" />
       </div>
+
+      <ChatWidget />
     </main>
   );
 }
@@ -311,6 +314,136 @@ function BookingBar({ variant = "hero", ref }: BookingBarProps) {
         Book on Zalo
       </a>
     </form>
+  );
+}
+
+function ChatWidget() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const emailHref = createEmailHref(message || "Hi For.rest, I would like to ask about Pomegranate House.");
+
+  return (
+    <aside className={`chat-widget ${isOpen ? "is-open" : ""}`} aria-label="For.rest direct chat">
+      <button
+        className="chat-launcher"
+        type="button"
+        aria-label={isOpen ? "Close chat" : "Open chat"}
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        {isOpen ? <CloseIcon /> : <ChatIcon />}
+      </button>
+
+      <section className="chat-panel" aria-hidden={!isOpen}>
+        <header className="chat-header">
+          <span className="chat-mark" aria-hidden="true">
+            FR
+          </span>
+          <span>For.rest</span>
+          <button type="button" aria-label="Close chat" onClick={() => setIsOpen(false)}>
+            <CloseIcon />
+          </button>
+        </header>
+
+        <div className="chat-body">
+          <p>
+            Hey, I&apos;m Mika, the For.rest digital assistant. I can help with
+            Pomegranate House availability, booking questions, and direct contact.
+          </p>
+
+          <div className="chat-contact-row" aria-label="Direct contact options">
+            <a href={bookingConfig.bookingZaloUrl} target="_blank" rel="noreferrer" aria-label="Chat on Zalo">
+              <ZaloIcon />
+            </a>
+            <a href={emailHref} aria-label="Email For.rest">
+              <MailIcon />
+            </a>
+          </div>
+
+          <div className="chat-quick-actions" aria-label="Common chat actions">
+            <a href="#booking" onClick={() => setIsOpen(false)}>
+              Book Pomegranate House
+            </a>
+            <a href={emailHref}>Question about a booking</a>
+            <a href={`tel:${bookingConfig.bookingPhone.replace(/\s/g, "")}`}>I want to talk to a human</a>
+          </div>
+        </div>
+
+        <form
+          className="chat-compose"
+          onSubmit={(event) => {
+            event.preventDefault();
+            window.location.href = createEmailHref(message || "Hi For.rest, I would like to ask about Pomegranate House.");
+          }}
+        >
+          <label className="sr-only" htmlFor="chat-message">
+            Type your message
+          </label>
+          <input
+            id="chat-message"
+            type="text"
+            value={message}
+            placeholder="Type your message here..."
+            onChange={(event) => setMessage(event.target.value)}
+          />
+          <button type="submit" aria-label="Send message by email">
+            <SendIcon />
+          </button>
+        </form>
+      </section>
+    </aside>
+  );
+}
+
+function createEmailHref(body: string) {
+  const subject = encodeURIComponent("For.rest Pomegranate House inquiry");
+  const encodedBody = encodeURIComponent(body);
+
+  return `mailto:${bookingConfig.contactEmail}?subject=${subject}&body=${encodedBody}`;
+}
+
+function ChatIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 6.5A5.5 5.5 0 0 1 10.5 1h3A5.5 5.5 0 0 1 19 6.5v3A5.5 5.5 0 0 1 13.5 15H11l-4.5 4v-4.7A5.5 5.5 0 0 1 5 9.5z" />
+      <path d="M9 7.6h6M9 10.4h4" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
+function ZaloIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6.7 16.4a6.9 6.9 0 1 1 2 1.4L6 18.6z" />
+      <path d="M8.7 9.2h4.4l-4.4 5.6h4.8M15.2 10.8v4M17.8 10.8v4" />
+    </svg>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 6h16v12H4z" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+function SendIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 4 21 12 4 20l3-8z" />
+      <path d="M7 12h14" />
+    </svg>
   );
 }
 
