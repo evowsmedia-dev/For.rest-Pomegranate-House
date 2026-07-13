@@ -102,6 +102,7 @@ const imageReveal = {
 function App() {
   const phoneHref = `tel:${bookingConfig.bookingPhone.replace(/\s/g, "")}`;
   const heroBookingRef = useRef<HTMLFormElement>(null);
+  const stickyBookingRef = useRef<HTMLFormElement>(null);
   const [showStickyBooking, setShowStickyBooking] = useState(false);
 
   useEffect(() => {
@@ -134,7 +135,10 @@ function App() {
     }
 
     const syncStickyBooking = () => {
-      setShowStickyBooking(window.scrollY > 18);
+      const stickyHeight = stickyBookingRef.current?.offsetHeight || heroBooking.offsetHeight;
+      const stickyTop = window.innerHeight - 16 - stickyHeight;
+
+      setShowStickyBooking(heroBooking.getBoundingClientRect().top <= stickyTop);
     };
 
     syncStickyBooking();
@@ -363,7 +367,7 @@ function App() {
       </footer>
 
       <div className={`sticky-booking ${showStickyBooking ? "is-visible" : ""}`} aria-hidden={!showStickyBooking}>
-        <BookingBar variant="sticky" />
+        <BookingBar ref={stickyBookingRef} variant="sticky" />
       </div>
 
       <ChatWidget stickyAligned={showStickyBooking} />
