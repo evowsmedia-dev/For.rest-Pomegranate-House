@@ -33,6 +33,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  padding-bottom: 112px;
   background: var(--color-paper);
 }
 
@@ -146,14 +147,14 @@ h1 {
   margin-bottom: 18px;
   color: var(--color-pine);
   font-size: clamp(42px, 8vw, 82px);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 0.98;
 }
 
 h2 {
   margin-bottom: 0;
   font-size: clamp(32px, 5vw, 56px);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.03;
 }
 
@@ -252,6 +253,36 @@ h3 {
   margin: 18px;
   padding: 14px 24px;
   white-space: nowrap;
+}
+
+.sticky-booking {
+  position: fixed;
+  right: 0;
+  bottom: 16px;
+  left: 0;
+  z-index: 20;
+  visibility: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
+  pointer-events: none;
+  transform: translateY(calc(100% + 28px));
+  opacity: 0;
+  transition:
+    opacity 220ms ease,
+    visibility 0ms linear 220ms;
+}
+
+.sticky-booking.is-visible {
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+
+.sticky-booking .booking-bar {
+  width: min(1080px, calc(100% - var(--space-page) * 2));
+  margin: 0 auto;
+  border: 1px solid rgba(35, 33, 44, 0.18);
 }
 
 .intro {
@@ -548,5 +579,69 @@ select:focus-visible {
 
   .footer {
     gap: 18px;
+  }
+}
+
+.sticky-booking .booking-bar {
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .sticky-booking .booking-bar {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: min(100% - var(--space-page) * 2, 760px);
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+
+  .sticky-booking .booking-bar label,
+  .sticky-booking .booking-bar label:nth-child(2),
+  .sticky-booking .booking-bar label:nth-child(3) {
+    min-height: 72px;
+    border-top: 0;
+    border-right: 1px solid rgba(35, 33, 44, 0.55);
+    padding: 14px 16px;
+  }
+
+  .sticky-booking .booking-bar input,
+  .sticky-booking .booking-bar select {
+    font-size: 14px;
+  }
+
+  .sticky-booking .booking-submit {
+    min-height: 48px;
+    margin: 12px;
+    padding: 12px 16px;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    padding-bottom: 176px;
+  }
+
+  .sticky-booking .booking-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sticky-booking .booking-bar label,
+  .sticky-booking .booking-bar label:nth-child(2),
+  .sticky-booking .booking-bar label:nth-child(3) {
+    min-height: 66px;
+    padding: 12px 14px;
+  }
+
+  .sticky-booking .booking-bar label:nth-child(2) {
+    border-right: 0;
+  }
+
+  .sticky-booking .booking-bar label:nth-child(3) {
+    border-top: 1px solid rgba(35, 33, 44, 0.55);
+  }
+
+  .sticky-booking .booking-submit {
+    min-height: 52px;
+    margin: 10px;
   }
 }

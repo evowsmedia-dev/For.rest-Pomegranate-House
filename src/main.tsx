@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useEffect, useRef, useState, type Ref } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -87,6 +87,29 @@ const structuredData = {
 
 function App() {
   const phoneHref = `tel:${bookingConfig.bookingPhone.replace(/\s/g, "")}`;
+  const heroBookingRef = useRef<HTMLFormElement>(null);
+  const [showStickyBooking, setShowStickyBooking] = useState(false);
+
+  useEffect(() => {
+    const heroBooking = heroBookingRef.current;
+
+    if (!heroBooking) {
+      return;
+    }
+
+    const syncStickyBooking = () => {
+      setShowStickyBooking(heroBooking.getBoundingClientRect().bottom < 0 && window.scrollY > 240);
+    };
+
+    syncStickyBooking();
+    window.addEventListener("scroll", syncStickyBooking, { passive: true });
+    window.addEventListener("resize", syncStickyBooking);
+
+    return () => {
+      window.removeEventListener("scroll", syncStickyBooking);
+      window.removeEventListener("resize", syncStickyBooking);
+    };
+  }, []);
 
   return (
     <main>
@@ -127,7 +150,7 @@ function App() {
           <img className="hero-image-small" src={heroImages[1].src} alt={heroImages[1].alt} />
         </div>
 
-        <BookingBar />
+        <BookingBar ref={heroBookingRef} />
       </section>
 
       <section className="page-shell intro" id="space">
@@ -239,13 +262,27 @@ function App() {
           <a href="#booking">Book direct</a>
         </div>
       </footer>
+
+      <div className={`sticky-booking ${showStickyBooking ? "is-visible" : ""}`} aria-hidden={!showStickyBooking}>
+        <BookingBar variant="sticky" />
+      </div>
     </main>
   );
 }
 
-function BookingBar() {
+type BookingBarProps = {
+  variant?: "hero" | "sticky";
+  ref?: Ref<HTMLFormElement>;
+};
+
+function BookingBar({ variant = "hero", ref }: BookingBarProps) {
   return (
-    <form className="booking-bar" aria-label="Check stay availability" onSubmit={(event) => event.preventDefault()}>
+    <form
+      ref={ref}
+      className={`booking-bar booking-bar-${variant}`}
+      aria-label="Check stay availability"
+      onSubmit={(event) => event.preventDefault()}
+    >
       <label>
         <span>Arrival</span>
         <input type="date" name="arrival" aria-label="Arrival date" />
