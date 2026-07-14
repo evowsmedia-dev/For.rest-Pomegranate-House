@@ -156,6 +156,8 @@ button {
   display: block;
   width: 100%;
   height: auto;
+  background: transparent;
+  object-fit: contain;
   transform: scaleX(-1) rotate(-7deg);
   transform-origin: center;
 }
