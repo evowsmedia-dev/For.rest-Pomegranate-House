@@ -8,7 +8,6 @@ const bookingConfig = {
   bookingPhone: "+84 900 000 000",
   bookingZaloUrl: "https://zalo.me/840900000000",
   contactEmail: "hello@forrest.example",
-  locationLabel: "Phu Yen, Vietnam",
 };
 
 const heroImages = [
@@ -59,12 +58,12 @@ const journalCards = [
 ];
 
 const amenities = [
-  "Sea-view bedrooms",
-  "Private pool courtyard",
-  "Loft living and dining room",
-  "Wifi, air conditioning, hot water",
-  "Compact kitchen with essentials",
-  "Local seafood and meal support",
+  { name: "Sea-view bedrooms", icon: "bed" },
+  { name: "Private pool courtyard", icon: "pool" },
+  { name: "Loft living and dining room", icon: "stairs" },
+  { name: "Wifi, air conditioning, hot water", icon: "wifi" },
+  { name: "Compact kitchen with essentials", icon: "kitchen" },
+  { name: "Local seafood and meal support", icon: "meal" },
 ];
 
 const structuredData = {
@@ -81,7 +80,7 @@ const structuredData = {
   },
   amenityFeature: amenities.map((amenity) => ({
     "@type": "LocationFeatureSpecification",
-    name: amenity,
+    name: amenity.name,
     value: true,
   })),
   image: [...heroImages, ...galleryImages, ...journalCards].map((image) => image.src),
@@ -178,7 +177,6 @@ function App() {
         <nav>
           <a href="#space">The house</a>
           <a href="#experience">The stay</a>
-          <a href="#location">Phu Yen</a>
           <a className="nav-pill" href="#booking">
             Book direct
           </a>
@@ -271,8 +269,9 @@ function App() {
           </div>
           <ul className="amenity-list" aria-label="Homestay amenities">
             {amenities.map((item) => (
-              <motion.li key={item} whileHover={{ y: -4, transition: { duration: 0.22 } }}>
-                {item}
+              <motion.li key={item.name} whileHover={{ y: -4, transition: { duration: 0.22 } }}>
+                <AmenityIcon name={item.icon} />
+                <span>{item.name}</span>
               </motion.li>
             ))}
           </ul>
@@ -335,17 +334,6 @@ function App() {
             Call {bookingConfig.bookingPhone}
           </a>
         </div>
-      </motion.section>
-
-      <motion.section className="page-shell location" id="location" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-12% 0px" }} variants={reveal}>
-        <p className="meta">LOCATION</p>
-        <h2>{bookingConfig.locationLabel}</h2>
-        <p>
-          Phu Yen is loved for its quieter coastline, fishing villages, fresh
-          seafood, open skies, and red-roofed seaside lanes. The exact address
-          is shared after reservation, keeping the house private while still
-          giving guests easy access to pool time, sea views, and sunset walks nearby.
-        </p>
       </motion.section>
 
       <footer className="page-shell footer">
@@ -428,6 +416,62 @@ function HeroWhale() {
     >
       <img src="/blue_whale.png" alt="" />
     </motion.div>
+  );
+}
+
+function AmenityIcon({ name }: { name: string }) {
+  return (
+    <span className="amenity-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        {name === "bed" && (
+          <>
+            <path d="M4 11V7.5A2.5 2.5 0 0 1 6.5 5h3A2.5 2.5 0 0 1 12 7.5V11" />
+            <path d="M12 11V8h4.5A3.5 3.5 0 0 1 20 11.5V19" />
+            <path d="M4 19v-8h16" />
+            <path d="M4 15h16" />
+          </>
+        )}
+        {name === "pool" && (
+          <>
+            <path d="M7 7.5a2.5 2.5 0 0 1 5 0V17" />
+            <path d="M12 7.5a2.5 2.5 0 0 1 5 0V17" />
+            <path d="M5 18c1.3 0 1.3-1 2.6-1s1.3 1 2.6 1 1.3-1 2.6-1 1.3 1 2.6 1 1.3-1 2.6-1" />
+            <path d="M5 21c1.3 0 1.3-1 2.6-1s1.3 1 2.6 1 1.3-1 2.6-1 1.3 1 2.6 1 1.3-1 2.6-1" />
+          </>
+        )}
+        {name === "stairs" && (
+          <>
+            <path d="M5 19h4v-4h4v-4h4V7h2" />
+            <path d="M5 19V5" />
+            <path d="M5 5h14" />
+          </>
+        )}
+        {name === "wifi" && (
+          <>
+            <path d="M5 9.5a11 11 0 0 1 14 0" />
+            <path d="M8 13a6.4 6.4 0 0 1 8 0" />
+            <path d="M11 16.5a1.6 1.6 0 0 1 2 0" />
+            <path d="M12 19h.01" />
+          </>
+        )}
+        {name === "kitchen" && (
+          <>
+            <path d="M7 4v16" />
+            <path d="M5 4v5a2 2 0 0 0 4 0V4" />
+            <path d="M16 4v16" />
+            <path d="M14 4h4v8h-4z" />
+          </>
+        )}
+        {name === "meal" && (
+          <>
+            <path d="M12 21a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
+            <path d="M12 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+            <path d="M18 4c-2 0-3.5 1.5-3.5 3.5" />
+            <path d="M6 4c2 0 3.5 1.5 3.5 3.5" />
+          </>
+        )}
+      </svg>
+    </span>
   );
 }
 

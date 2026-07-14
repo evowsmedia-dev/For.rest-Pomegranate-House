@@ -144,7 +144,7 @@ button {
 
 .hero-whale {
   position: absolute;
-  top: -16px;
+  top: -1px;
   right: clamp(0px, 4vw, 52px);
   z-index: 0;
   width: clamp(260px, 34vw, 500px);
@@ -207,8 +207,7 @@ h3 {
 
 .hero-copy p:last-child,
 .intro > p,
-.booking-section p,
-.location p {
+.booking-section p {
   max-width: 610px;
   font-size: clamp(18px, 2vw, 22px);
   line-height: 1.32;
@@ -397,13 +396,41 @@ h3 {
 }
 
 .amenity-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   min-height: 64px;
   border: 1px solid rgba(41, 33, 28, 0.34);
   border-radius: var(--radius-card);
-  padding: 20px;
+  padding: 16px 18px;
   background: var(--color-paper);
   font-size: 18px;
   line-height: 1.2;
+}
+
+.amenity-icon {
+  display: inline-flex;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--color-charcoal);
+}
+
+.amenity-icon svg {
+  width: 23px;
+  height: 23px;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.amenity-list span:last-child {
+  min-width: 0;
 }
 
 .journal {
@@ -485,12 +512,6 @@ h3 {
   border-radius: var(--radius-card);
   font-weight: 400;
   text-align: center;
-}
-
-.location {
-  max-width: 840px;
-  padding-top: clamp(76px, 12vw, 132px);
-  margin-left: max(var(--space-page), calc((100% - var(--page-max-width)) / 2));
 }
 
 .footer {
@@ -788,7 +809,7 @@ select:focus-visible {
   }
 
   .hero-whale {
-    top: -10px;
+    top: 20px;
     right: -24px;
     width: clamp(210px, 44vw, 340px);
     opacity: 0.5;
@@ -833,9 +854,6 @@ select:focus-visible {
     flex-direction: column;
   }
 
-  .location {
-    margin-left: auto;
-  }
 }
 
 @media (max-width: 560px) {
