@@ -145,7 +145,7 @@ button {
 .hero-whale {
   position: absolute;
   top: -1px;
-  right: clamp(0px, 4vw, 52px);
+  right: calc(clamp(0px, 4vw, 52px) - 20px);
   z-index: 0;
   width: clamp(260px, 34vw, 500px);
   pointer-events: none;
@@ -810,7 +810,7 @@ select:focus-visible {
 
   .hero-whale {
     top: 50px;
-    right: -24px;
+    right: -44px;
     width: clamp(210px, 44vw, 340px);
     opacity: 0.5;
   }
