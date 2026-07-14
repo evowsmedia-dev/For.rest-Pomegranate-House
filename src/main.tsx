@@ -1,9 +1,7 @@
-import { Canvas, useFrame } from "@react-three/fiber";
 import Lenis from "lenis";
 import { motion } from "framer-motion";
 import { StrictMode, useEffect, useRef, useState, type Ref } from "react";
 import { createRoot } from "react-dom/client";
-import * as THREE from "three";
 import "./styles.css";
 
 const bookingConfig = {
@@ -188,7 +186,7 @@ function App() {
       </motion.header>
 
       <section className="hero page-shell" id="top">
-        <CinematicScene />
+        <HeroWhale />
         <motion.div
           className="hero-copy"
           initial={{ opacity: 0, y: 28 }}
@@ -419,73 +417,17 @@ function BookingBar({ variant = "hero", ref }: BookingBarProps) {
   );
 }
 
-function CinematicScene() {
+function HeroWhale() {
   return (
-    <div className="cinematic-scene" aria-hidden="true">
-      <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 7], fov: 42 }} gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }}>
-        <ambientLight intensity={0.9} />
-        <directionalLight position={[3, 4, 5]} intensity={1.25} color="#ffd9b0" />
-        <directionalLight position={[-4, -2, 4]} intensity={0.9} color="#73d7d2" />
-        <WhaleScene />
-      </Canvas>
-    </div>
-  );
-}
-
-function WhaleScene() {
-  const whaleRef = useRef<THREE.Group>(null);
-  const waveRef = useRef<THREE.Group>(null);
-
-  useFrame(({ clock, pointer }) => {
-    const time = clock.getElapsedTime();
-
-    if (whaleRef.current) {
-      whaleRef.current.rotation.y = -0.34 + Math.sin(time * 0.26) * 0.1 + pointer.x * 0.04;
-      whaleRef.current.rotation.z = Math.sin(time * 0.42) * 0.045;
-      whaleRef.current.position.y = Math.sin(time * 0.52) * 0.09;
-      whaleRef.current.position.x = Math.sin(time * 0.2) * 0.12;
-    }
-
-    if (waveRef.current) {
-      waveRef.current.rotation.z = Math.sin(time * 0.35) * 0.035;
-      waveRef.current.position.y = -1.1 + Math.sin(time * 0.7) * 0.035;
-    }
-  });
-
-  return (
-    <group position={[0.15, 0.08, -0.3]}>
-      <group ref={whaleRef} rotation={[0.05, -0.34, -0.02]}>
-        <mesh scale={[1.72, 0.58, 0.58]} rotation={[0, 0, Math.PI / 2]}>
-          <capsuleGeometry args={[0.72, 1.32, 18, 36]} />
-          <meshStandardMaterial color="#315f6a" roughness={0.58} metalness={0.04} emissive="#0b2a31" emissiveIntensity={0.05} />
-        </mesh>
-        <mesh position={[1.72, 0.02, 0]} rotation={[0, 0, -Math.PI / 2]} scale={[0.82, 0.48, 0.12]}>
-          <coneGeometry args={[0.62, 0.8, 3]} />
-          <meshStandardMaterial color="#315f6a" roughness={0.58} metalness={0.04} />
-        </mesh>
-        <mesh position={[0.2, -0.5, 0.1]} rotation={[0.2, 0.05, -0.58]} scale={[0.72, 0.2, 0.04]}>
-          <circleGeometry args={[0.8, 48]} />
-          <meshStandardMaterial color="#224b55" roughness={0.5} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh position={[-0.98, 0.28, 0.32]} rotation={[0.2, 0.42, 0.14]} scale={[0.52, 0.12, 0.04]}>
-          <circleGeometry args={[0.72, 40]} />
-          <meshStandardMaterial color="#f4ead8" roughness={0.42} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh position={[-1.28, 0.14, 0.38]}>
-          <sphereGeometry args={[0.035, 16, 16]} />
-          <meshStandardMaterial color="#10272d" roughness={0.2} />
-        </mesh>
-      </group>
-
-      <group ref={waveRef} position={[0, -1.1, -0.35]}>
-        {[-1.15, -0.35, 0.45, 1.2].map((x, index) => (
-          <mesh key={x} position={[x, Math.sin(index) * 0.05, 0]} rotation={[1.22, 0, 0]} scale={[0.72, 0.11, 0.04]}>
-            <torusGeometry args={[0.62, 0.012, 8, 64]} />
-            <meshStandardMaterial color="#5ccbc7" roughness={0.2} metalness={0.1} transparent opacity={0.58} />
-          </mesh>
-        ))}
-      </group>
-    </group>
+    <motion.div
+      className="hero-whale"
+      aria-hidden="true"
+      initial={{ opacity: 0, y: 28, rotate: 5 }}
+      animate={{ opacity: 1, y: 0, rotate: 0 }}
+      transition={{ delay: 0.22, duration: 1.1, ease: easeOut }}
+    >
+      <img src="/blue_whale.png" alt="" />
+    </motion.div>
   );
 }
 

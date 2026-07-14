@@ -137,25 +137,43 @@ button {
   padding: 28px 0 0;
 }
 
-.hero > *:not(.cinematic-scene) {
+.hero > *:not(.hero-whale) {
   position: relative;
   z-index: 1;
 }
 
-.cinematic-scene {
+.hero-whale {
   position: absolute;
-  top: -120px;
-  right: 0;
-  bottom: 140px;
-  left: 52%;
+  top: -52px;
+  right: clamp(0px, 4vw, 52px);
   z-index: 0;
+  width: clamp(260px, 34vw, 500px);
   pointer-events: none;
-  opacity: 0.78;
-  mix-blend-mode: soft-light;
+  opacity: 0.72;
+  mix-blend-mode: multiply;
 }
 
-.cinematic-scene canvas {
+.hero-whale::before {
+  position: absolute;
+  inset: 14% 6% 8% 4%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 46%, rgba(86, 201, 197, 0.2), transparent 52%),
+    radial-gradient(circle at 54% 58%, rgba(246, 234, 216, 0.58), transparent 60%);
+  content: "";
+  filter: blur(16px);
+  transform: scaleX(-1) rotate(-7deg);
+}
+
+.hero-whale img {
   display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.78) contrast(1.18) brightness(1.05) sepia(0.06)
+    drop-shadow(0 18px 22px rgba(41, 33, 28, 0.12));
+  opacity: 0.94;
+  transform: scaleX(-1) rotate(-7deg);
+  transform-origin: center;
 }
 
 .hero-copy {
@@ -783,13 +801,11 @@ select:focus-visible {
     gap: 18px;
   }
 
-  .cinematic-scene {
-    top: -90px;
-    right: 0;
-    bottom: auto;
-    left: 38%;
-    height: 360px;
-    opacity: 0.46;
+  .hero-whale {
+    top: -34px;
+    right: -24px;
+    width: clamp(210px, 44vw, 340px);
+    opacity: 0.5;
   }
 
   .hero-image-large,
